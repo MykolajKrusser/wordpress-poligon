@@ -2,40 +2,47 @@
 
     <section id="about" class="s_about bg_light">
       <div class="section_header">
-        <h2>Обо мне</h2>
-        <div class="s_descr_wrap"><div class="s_descr">Познакомимся ближе</div></div>
+        <h2><?php echo get_cat_name(2)?></h2>
+        <div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(2)?></div></div>
       </div>
       <div class="section_content">
         <div class="container">
           <div class="row">
+            <?php
+              if(have_posts()) : query_posts('p=33');
+              while(have_posts()) : the_post();
+            ?>
             <div class="col-md-4 col-md-push-4 animation_1">
               <h3>Фото</h3>
               <div class="person">
-                <a href="img/photo.jpg" class="popup"><img src="<?php echo get_template_directory_uri(); ?>/img/photo.jpg" alt="Alt"/></a>
+                <?php if(has_post_thumbnail()) : ?>
+                  <a class="popup" 
+                    href="<?php 
+                      $large_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+                      echo $large_image_url[0]; 
+                    ?>" 
+                    title="<?php the_title_attribute();?>"
+                  >
+                    <?php the_post_thumbnail(array(220, 220)); ?>
+                  </a>
+                <?php endif; ?>
               </div>
             </div>
             <div class="col-md-4 col-md-pull-4 animation_2">
-              <h3>Немного о себе</h3>
-              <p>
-                Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-                стандартной "рыбой" для текстов на латинице с начала XVI века.
-              </p>
-              <p>
-                Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-                стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-                создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.
-              </p>
+              <h3><?php the_title(); ?></h3>
+              <?php the_content(); ?>
             </div>
+            <?php endwhile; endif; wp_reset_query(); ?>
+
             <div class="col-md-4 animation_3 personal_last_block">
-              <h3>Персональная информация</h3>
-              <h2 class="personal_header">Александр Прокопский</h2>
-              <ul>
-                <li>Профессиональное создание сайтов: разработка дизайна, HTML верстка, посадка на CMS WordPress</li>
-                <li>День рождения: 3 июня 1988 года</li>
-                <li>Номер телефона: +7 999 999 99 99</li>
-                <li>E-mail: <a href="mailto:youmail@mail.ru">youmail@mail.ru</a></li>
-                <li>Веб-сайт: <a href="//webdesign-master.ru" target="_blank">webdesign-master.ru</a></li>
-              </ul>
+              <?php
+                if(have_posts()) : query_posts('p=36');
+                while(have_posts()) : the_post();
+              ?>
+              <h3><?php the_title(); ?></h3>
+              <h2 class="personal_header"><?php echo get_bloginfo('name'); ?></h2>
+              <?php the_content(); ?>
+              <?php endwhile; endif; wp_reset_query(); ?>
               <div class="social_wrap">
                 <ul>
                   <li>
