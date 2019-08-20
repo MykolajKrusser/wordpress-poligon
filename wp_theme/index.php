@@ -61,74 +61,42 @@
 
 		<section id="resume" class="s_resume">
 			<div class="section_header">
-				<h2>Резюме</h2>
-				<div class="s_descr_wrap"><div class="s_descr">Мои знания и достижения</div></div>
+				<h2><?php echo get_cat_name(4)?></h2>
+				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(4)?></div></div>
 			</div>
 			<div class="section_content">
 				<div class="container">
 					<div class="row">
 						<div class="resume_container">
 							<div class="col-md-6 col-sm-6 left">
-								<h3>Работа</h3>
+								<h3><?php echo get_cat_name(5)?></h3>
 								<div class="resume_icon"><i class="icon-basic-case"></i></div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description">ООО "Пронькина забава"<strong>Программист</strong></div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description">ООО "Пронькина забава"<strong>Программист</strong></div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description">ООО "Пронькина забава"<strong>Программист</strong></div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
+
+								<?php if(have_posts()) : query_posts('cat=5');
+									while(have_posts()) : the_post(); ?>
+									<div class="resume_item">
+										<div class="year"><?php echo get_post_meta($post->ID, 'years', true); ?></div>
+										<div class="resume_description"><?php echo get_post_meta($post->ID, 'resume_place', true); ?><strong><?php the_title(); ?></strong></div>
+										<p>
+											<?php the_content(); ?>
+										</p>
+									</div>
+								<?php endwhile; endif; wp_reset_query(); ?>
+								
 							</div>
 							<div class="col-md-6 col-sm-6 right">
-								<h3>Учеба</h3>
+								<h3><?php echo get_cat_name(6)?></h3>
 								<div class="resume_icon"><i class="icon-basic-book-pen"></i></div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description"><strong>Программист</strong>ООО "Пронькина забава"</div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description"><strong>Программист</strong>ООО "Пронькина забава"</div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
-								<div class="resume_item">
-									<div class="year">2008-2015</div>
-									<div class="resume_description"><strong>Программист</strong>ООО "Пронькина забава"</div>
-									<p>
-										Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является
-										стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник
-										создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum.
-									</p>
-								</div>
+								<?php if(have_posts()) : query_posts('cat=6');
+									while(have_posts()) : the_post(); ?>
+									<div class="resume_item">
+										<div class="year"><?php echo get_post_meta($post->ID, 'years', true); ?></div>
+										<div class="resume_description"><strong><?php the_title(); ?></strong><?php echo get_post_meta($post->ID, 'resume_place', true); ?></div>
+										<p>
+											<?php the_content(); ?>
+										</p>
+									</div>
+								<?php endwhile; endif; wp_reset_query(); ?>
 							</div>
 						</div>
 					</div>
