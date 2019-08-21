@@ -2,8 +2,14 @@
 
 		<section id="about" class="s_about bg_light">
 			<div class="section_header">
-				<h2><?php echo get_cat_name(2)?></h2>
-				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(2)?></div></div>
+				<h2>
+					<?php
+						$idObj = get_category_by_slug('s_about');
+						$id = $idObj->term_id;
+						echo get_cat_name($id);
+					?>
+				</h2>
+				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description($id)?></div></div>
 			</div>
 			<div class="section_content">
 				<div class="container">
@@ -61,8 +67,14 @@
 
 		<section id="resume" class="s_resume">
 			<div class="section_header">
-				<h2><?php echo get_cat_name(4)?></h2>
-				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(4)?></div></div>
+				<h2>
+					<?php
+						$idObj = get_category_by_slug('s_resume');
+						$id = $idObj->term_id;
+						echo get_cat_name($id);
+					?>
+				</h2>
+				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description($id)?></div></div>
 			</div>
 			<div class="section_content">
 				<div class="container">
@@ -106,8 +118,8 @@
 
 		<section id="portfolio" class="s_portfolio bg_dark">
 			<div class="section_header">
-				<h2>Портфолио</h2>
-				<div class="s_descr_wrap"><div class="s_descr">Мои последние работы</div></div>
+				<h2><?php echo get_cat_name(7)?></h2>
+				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(7)?></div></div>
 			</div>
 			<div class="section_content">
 				<div class="container">
@@ -115,188 +127,46 @@
 						<div class="filter_div controls">
 							<ul>
 								<li class="filter active" data-filter="all">Все работы</li>
-								<li class="filter" data-filter=".category-1">Сайты</li>
-								<li class="filter" data-filter=".category-2">Айдентика</li>
-								<li class="filter" data-filter=".category-3">Логотипы</li>
+								<li class="filter" data-filter=".sites">Сайты</li>
+								<li class="filter" data-filter=".identy">Айдентика</li>
+								<li class="filter" data-filter=".logos">Логотипы</li>
 							</ul>
 						</div>
 						<div id="portfolio_grid">
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-1">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/1.jpg" alt="Alt" />
+
+						<?php if(have_posts()) : query_posts('cat=7');
+							while(have_posts()) : the_post(); ?>
+							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item <?php
+								$tags = wp_get_post_tags($post->ID);
+								if ($tags) {
+									foreach($tags as $tag) {
+										echo ' ' . $tag->name;
+									}
+								}
+								?>">
+								<?php the_post_thumbnail(array(400, 300)); ?>
 								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
+									<h3><?php the_title(); ?></h3>
+									<?php the_excerpt(); ?>
+									<a href="#" class="popup_content">view</a>
 								</div>
 								<div class="hidden">
 									<div class="podrt_descr">
 										<div class="modal-box-content">
 											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/1.jpg" alt="Alt" />
+											<h3><?php the_title(); ?></h3>
+											<?php the_content(); ?>
+											<img 
+												src="<?php 
+													$large_image_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+													echo $large_image_url[0]; 
+												?>" alt="<?php the_title(); ?>" />
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-1">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/4.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/4.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-1">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/2.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/2.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-2">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/3.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/3.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-2">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/4.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/4.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-3">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/5.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/5.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-3">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/6.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/6.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mix col-md-3 col-sm-6 col-xs-12 portfolio_item category-2">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/1.jpg" alt="Alt" />
-								<div class="port_item_cont">
-									<h3>Заголовок работы</h3>
-									<p>Описание работы</p>
-									<a href="#" class="popup_content">Посмотреть</a>
-								</div>
-								<div class="hidden">
-									<div class="podrt_descr">
-										<div class="modal-box-content">
-											<button class="mfp-close" type="button" title="Закрыть (Esc)">×</button>
-											<h3>Заголовок работы</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum cupiditate, dignissimos quo.
-												Dolore, omnis totam quibusdam voluptatibus cum, nulla dolores sunt iste? Sunt nam illum, animi
-												magni veniam adipisci non.
-											</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/img/portfolio-images/1.jpg" alt="Alt" />
-										</div>
-									</div>
-								</div>
-							</div>
+						<?php endwhile; endif; wp_reset_query(); ?>
+
 						</div>
 					</div>
 				</div>
@@ -305,8 +175,8 @@
 
 		<section id="contacts" class="s_contacts bg_light">
 			<div class="section_header">
-				<h2>Контакты</h2>
-				<div class="s_descr_wrap"><div class="s_descr">Оставьте ваше сообщение</div></div>
+				<h2><?php echo get_cat_name(11); ?></h2>
+				<div class="s_descr_wrap"><div class="s_descr"><?php echo category_description(11); ?></div></div>
 			</div>
 			<div class="section_content">
 				<div class="container">
@@ -314,18 +184,38 @@
 						<div class="col-md-6 col-sm-6">
 							<div class="contact_box">
 								<div class="contacts_icon icon-basic-geolocalize-05"></div>
-								<h3>Адрес:</h3>
-								<p>Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.</p>
+								<h3>Adress:</h3>
+								<p>
+									<?php 
+										$option = get_option('sample_theme_options'); 
+										echo $option['adress'];
+									?>
+								</p>
 							</div>
 							<div class="contact_box">
 								<div class="contacts_icon icon-basic-smartphone"></div>
-								<h3>Телефон:</h3>
-								<p>+7 999 999 99 99</p>
+								<h3>Phone:</h3>
+								<p>
+									<?php 
+										$option = get_option('sample_theme_options'); 
+										echo $option['phonetext'];
+									?>
+								</p>
 							</div>
 							<div class="contact_box">
 								<div class="contacts_icon icon-basic-webpage-img-txt"></div>
-								<h3>Веб-сайт:</h3>
-								<p><a href="//webdesign-master.ru" target="_blank">webdesign-master.ru</a></p>
+								<h3>Web site:</h3>
+								<p><a href="//<?php 
+													$option = get_option('sample_theme_options'); 
+													echo $option['link'];
+												?>" target="_blank"
+											>
+											<?php 
+												$option = get_option('sample_theme_options'); 
+												echo $option['link'];
+											?>
+									</a>
+								</p>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6">
@@ -337,38 +227,38 @@
 								method="post"
 							>
 								<label class="form-group">
-									<span class="color_element">*</span> Ваше имя:
+									<span class="color_element">*</span> Name:
 									<input
 										type="text"
 										name="name"
-										placeholder="Ваше имя"
-										data-validation-required-message="Вы не ввели имя"
+										placeholder="Name"
+										data-validation-required-message="Name need"
 										required
 									/>
 									<span class="help-block text-danger"></span>
 								</label>
 								<label class="form-group">
-									<span class="color_element">*</span> Ваш E-mail:
+									<span class="color_element">*</span>E-mail:
 									<input
 										type="email"
 										name="email"
-										placeholder="Ваш E-mail"
-										data-validation-required-message="Не корректно введен E-mail"
+										placeholder="E-mail"
+										data-validation-required-message="need E-mail"
 										required
 									/>
 									<span class="help-block text-danger"></span>
 								</label>
 								<label class="form-group">
-									<span class="color_element">*</span> Ваше сообщение:
+									<span class="color_element">*</span> Message:
 									<textarea
 										name="message"
-										placeholder="Ваше сообщение"
-										data-validation-required-message="Вы не ввели сообщение"
+										placeholder="Message"
+										data-validation-required-message="Need Message"
 										required
 									></textarea>
 									<span class="help-block text-danger"></span>
 								</label>
-								<button>Отправить</button>
+								<button>Send</button>
 							</form>
 						</div>
 					</div>

@@ -2,7 +2,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            &copy; 2015 Александр Прокопский
+            &copy; <?php echo date('Y');?> <?php echo get_bloginfo('title')?>
               <div class="social_wrap">
 								<ul>
 								<?php if(have_posts()) : query_posts('cat=3');
